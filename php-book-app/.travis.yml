@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - 7.2
+
+cache:
+  directories:
+  - app/vendor
+  - $HOME/.composer/cache
+
+env:
+  - DATABASE_TEST_URL=mysql://root:@127.0.0.1/test
+
+before_script:
+  - composer install --prefer-dist --no-interaction
+  - mysql -u root -e 'CREATE DATABASE test;'
+
+script:
+  - app/vendor/bin/phpunit
